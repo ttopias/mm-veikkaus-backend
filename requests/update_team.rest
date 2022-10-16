@@ -1,0 +1,17 @@
+PUT http://localhost:3003/api/teams'
+Content-Type: application/json
+
+{
+    "wins": 0,
+"draws": 0,
+"losses": 0,
+"url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Flag_of_Ecuador.svg/120px-Flag_of_Ecuador.svg.png",
+"name": "Ecuador",
+"group": "A",
+"games": 0,
+"points": 0,
+"goalsFor": 0,
+"goalsAgainst": 0,
+"goalDifference": 0,
+"id": "634ade53648dc20b5f2d6ab2"
+}

@@ -1,0 +1,6 @@
+GET http://localhost:3003/api/teams/634ade53648dc20b5f2d6ab2
+Content-Type: application/json
+
+{
+    
+}

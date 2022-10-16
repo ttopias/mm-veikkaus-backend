@@ -1,0 +1,461 @@
+// const uploadMatches = () => {
+//     matchData.forEach(m => {
+//       console.log('m :>> ', m);
+//       const homeTeamId = teams.filter(team => team.name === m.homeTeam)[0].id
+//       const awayTeamId = teams.filter(team => team.name === m.awayTeam)[0].id
+//       console.log('homeTeamId :>> ', homeTeamId, ' awayTeamId :>> ', awayTeamId);
+//       const dateSplit = m.date.split('-')
+//       const date = `${dateSplit[2]}-${dateSplit[1]}-${dateSplit[0]}`
+//       const match = {
+//         date: date,
+//         time: m.time,
+//         homeTeamId: homeTeamId,
+//         awayTeamId: awayTeamId
+//       }
+//       dispatch(createMatch(match))
+//     })
+//   }
+  
+//   useEffect(() => {
+//     dispatch(initUser())
+//     dispatch(initMatches())
+//     dispatch(initTeams())
+
+//     if(matches.length === 0) {
+//       uploadMatches()
+//     }
+//   }, [])
+
+[
+	{
+	"date": "2022-11-20",
+	"time": "18:00",
+	"homeTeam": "Qatar",
+	"awayTeam": "Ecuador",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-21",
+	"time": "18:00",
+	"homeTeam": "Senegal",
+	"awayTeam": "Alankomaat",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-21",
+	"time": "15:00",
+	"homeTeam": "Englanti",
+	"awayTeam": "Iran",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-21",
+	"time": "21:00",
+	"homeTeam": "Yhdysvallat",
+	"awayTeam": "Wales",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-22",
+	"time": "12:00",
+	"homeTeam": "Argentiina",
+	"awayTeam": "Saudi-Arabia",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-22",
+	"time": "18:00",
+	"homeTeam": "Meksiko",
+	"awayTeam": "Puola",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-22",
+	"time": "15:00",
+	"homeTeam": "Tanska",
+	"awayTeam": "Tunisia",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-22",
+	"time": "21:00",
+	"homeTeam": "Ranska",
+	"awayTeam": "Australia",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-23",
+	"time": "15:00",
+	"homeTeam": "Saksa",
+	"awayTeam": "Japani",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-23",
+	"time": "18:00",
+	"homeTeam": "Espanja",
+	"awayTeam": "Costa Rica",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-23",
+	"time": "12:00",
+	"homeTeam": "Marokko",
+	"awayTeam": "Kroatia",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-23",
+	"time": "21:00",
+	"homeTeam": "Belgia",
+	"awayTeam": "Kanada",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-24",
+	"time": "12:00",
+	"homeTeam": "Sveitsi",
+	"awayTeam": "Kamerun",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-24",
+	"time": "21:00",
+	"homeTeam": "Brasilia",
+	"awayTeam": "Serbia",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-24",
+	"time": "15:00",
+	"homeTeam": "Uruguay",
+	"awayTeam": "Etelä-Korea",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-24",
+	"time": "18:00",
+	"homeTeam": "Portugali",
+	"awayTeam": "Ghana",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-25",
+	"time": "15:00",
+	"homeTeam": "Qatar",
+	"awayTeam": "Senegal",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-25",
+	"time": "18:00",
+	"homeTeam": "Alankomaat",
+	"awayTeam": "Ecuador",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-25",
+	"time": "12:00",
+	"homeTeam": "Wales",
+	"awayTeam": "Iran",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-25",
+	"time": "21:00",
+	"homeTeam": "Englanti",
+	"awayTeam": "Yhdysvallat",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-26",
+	"time": "15:00",
+	"homeTeam": "Puola",
+	"awayTeam": "Saudi-Arabia",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-26",
+	"time": "21:00",
+	"homeTeam": "Argentiina",
+	"awayTeam": "Meksiko",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-26",
+	"time": "12:00",
+	"homeTeam": "Tunisia",
+	"awayTeam": "Australia",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-26",
+	"time": "18:00",
+	"homeTeam": "Ranska",
+	"awayTeam": "Tanska",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-27",
+	"time": "12:00",
+	"homeTeam": "Japani",
+	"awayTeam": "Costa Rica",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-27",
+	"time": "21:00",
+	"homeTeam": "Espanja",
+	"awayTeam": "Saksa",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-27",
+	"time": "15:00",
+	"homeTeam": "Belgia",
+	"awayTeam": "Marokko",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-27",
+	"time": "18:00",
+	"homeTeam": "Kroatia",
+	"awayTeam": "Kanada",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-28",
+	"time": "12:00",
+	"homeTeam": "Kamerun",
+	"awayTeam": "Serbia",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-28",
+	"time": "18:00",
+	"homeTeam": "Brasilia",
+	"awayTeam": "Sveitsi",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-28",
+	"time": "15:00",
+	"homeTeam": "Etelä-Korea",
+	"awayTeam": "Ghana",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-28",
+	"time": "21:00",
+	"homeTeam": "Portugali",
+	"awayTeam": "Uruguay",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-29",
+	"time": "17:00",
+	"homeTeam": "Ecuador",
+	"awayTeam": "Senegal",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-29",
+	"time": "17:00",
+	"homeTeam": "Alankomaat",
+	"awayTeam": "Qatar",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-29",
+	"time": "21:00",
+	"homeTeam": "Wales",
+	"awayTeam": "Englanti",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-29",
+	"time": "21:00",
+	"homeTeam": "Iran",
+	"awayTeam": "Yhdysvallat",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-30",
+	"time": "21:00",
+	"homeTeam": "Puola",
+	"awayTeam": "Argentiina",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-30",
+	"time": "21:00",
+	"homeTeam": "Saudi-Arabia",
+	"awayTeam": "Meksiko",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-30",
+	"time": "17:00",
+	"homeTeam": "Australia",
+	"awayTeam": "Tanska",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-11-30",
+	"time": "17:00",
+	"homeTeam": "Tunisia",
+	"awayTeam": "Ranska",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-12-01",
+	"time": "21:00",
+	"homeTeam": "Japani",
+	"awayTeam": "Espanja",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-12-01",
+	"time": "21:00",
+	"homeTeam": "Costa Rica",
+	"awayTeam": "Saksa",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-12-01",
+	"time": "17:00",
+	"homeTeam": "Kroatia",
+	"awayTeam": "Belgia",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-12-01",
+	"time": "17:00",
+	"homeTeam": "Kanada",
+	"awayTeam": "Marokko",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-12-02",
+	"time": "21:00",
+	"homeTeam": "Serbia",
+	"awayTeam": "Sveitsi",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-12-02",
+	"time": "21:00",
+	"homeTeam": "Kamerun",
+	"awayTeam": "Brasilia",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-12-02",
+	"time": "17:00",
+	"homeTeam": "Ghana",
+	"awayTeam": "Uruguay",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	},
+	{
+	"date": "2022-12-02",
+	"time": "17:00",
+	"homeTeam": "Etelä-Korea",
+	"awayTeam": "Portugali",
+	"homeGoals": 0,
+	"awayGoals": 0,
+	"finished": false
+	}]
