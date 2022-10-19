@@ -1,5 +1,4 @@
 const router = require('express').Router()
-const jwt = require('jsonwebtoken')
 const Match = require('../models/match')
 const Team = require('../models/team')
 
@@ -9,6 +8,20 @@ router.get('/', async (request, response) => {
     .populate('homeTeam')
     .populate('awayTeam')
   return response.json(matches)
+})
+
+router.post('/', async (request, response) => {
+  const body = request.body
+
+  const newMatch = new Match({
+    date: body.date,
+    time: body.time,
+    homeTeam: body.homeTeamId,
+    awayTeam: body.homeTeamId,
+  })
+
+  const savedMatch = await newMatch.save()
+  response.status(201).json(savedMatch)
 })
 
 router.get('/:id', async (request, response) => {
@@ -23,11 +36,6 @@ router.get('/:id', async (request, response) => {
 })
 
 router.delete('/:id', async (request, response) => {
-  const decodedToken = jwt.verify(request.token, process.env.SECRET)
-
-  if (!request.token || !decodedToken.id) {
-    return response.status(401).json({ error: 'token missing or invalid' })
-  }
   const match = await Match.findByIdAndRemove(request.params.id)
   await match.remove()
 
@@ -36,20 +44,32 @@ router.delete('/:id', async (request, response) => {
 
 router.put('/:id', async (request, response) => {
   const match = request.body
-  console.log('match :>> ', match);
-  const homeTeam = await Team.findById(match.homeTeam)
-  const awayTeam = await Team.findById(match.awayTeam)
 
-  console.log('homeTeam backend@matches.js PUT :>> ', homeTeam);
-  console.log('awayTeam backend@matches.js PUT:>> ', awayTeam);
+  const homeTeam = await Team.findOne({ name: match.homeTeam.name })
+  const awayTeam = await Team.findOne({ name: match.awayTeam.name })
 
-  if (match.homeGoals > match.awayGoals) {
+  const matchToUpdate = {
+    ...match,
+    homeTeam: homeTeam._id,
+    awayTeam: awayTeam._id,
+  }
+
+  homeTeam.matches = homeTeam.matches + 1
+  awayTeam.matches = awayTeam.matches + 1
+  if (parseInt(match.homeGoals) > parseInt(match.awayGoals)) {
+    console.log('kotivoitto :' + match.homeGoals + ' - ' + match.awayGoals)
     homeTeam.wins = homeTeam.wins + 1
+    homeTeam.points = homeTeam.points + 3
     awayTeam.losses = awayTeam.losses + 1
-  } else if (match.homeGoals < match.awayGoals) {
+  } else if (parseInt(match.homeGoals) < parseInt(match.awayGoals)) {
+    console.log('vierasvoitto :' + match.homeGoals + ' - ' + match.awayGoals)
     homeTeam.losses = homeTeam.losses + 1
     awayTeam.wins = awayTeam.wins + 1
+    awayTeam.points = awayTeam.points + 3
   } else {
+    console.log('tasapeli :' + match.homeGoals + ' - ' + match.awayGoals)
+    homeTeam.points = homeTeam.points + 1
+    awayTeam.points = awayTeam.points + 1
     homeTeam.draws = homeTeam.draws + 1
     awayTeam.draws = awayTeam.draws + 1
   }
@@ -57,29 +77,14 @@ router.put('/:id', async (request, response) => {
   homeTeam.goalsAgainst = homeTeam.goalsAgainst + match.awayGoals
   awayTeam.goalsFor = awayTeam.goalsFor + match.awayGoals
   awayTeam.goalsAgainst = awayTeam.goalsAgainst + match.homeGoals
+  homeTeam.goalDifference = homeTeam.goalsFor - homeTeam.goalsAgainst
+  awayTeam.goalDifference = awayTeam.goalsFor - awayTeam.goalsAgainst
+
   await homeTeam.save()
   await awayTeam.save()
 
-  Match.findByIdAndUpdate(request.params.id, match, { new: true })
-        .then(updatedMatch => {
-            response.json(updatedMatch)
-        })
-        .catch(error => next(error))
-})
-
-router.post('/', async (request, response) => {
-  const body = request.body
-  const homeTeam = await Team.find({ _id: body.homeTeamId})
-  const awayTeam = await Team.find({ _id: body.awayTeamId})
-  const newMatch = new Match({
-    date: body.date,
-    time: body.time,
-    homeTeam: body.homeTeamId,
-    awayTeam: body.homeTeamId,
-  })
-
-  const savedMatch = await newMatch.save()
-  response.status(201).json(savedMatch)
+  const updatedMatch = await Match.findOneAndUpdate({ _id: match.id }, matchToUpdate, { new: true })
+  return response.json(matchToUpdate)
 })
 
 module.exports = router
