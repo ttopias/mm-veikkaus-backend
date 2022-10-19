@@ -71,12 +71,11 @@ router.post('/', async (request, response) => {
   const body = request.body
   const homeTeam = await Team.find({ _id: body.homeTeamId})
   const awayTeam = await Team.find({ _id: body.awayTeamId})
-
   const newMatch = new Match({
     date: body.date,
     time: body.time,
-    homeTeam: homeTeam._id,
-    awayTeam: awayTeam._id,
+    homeTeam: body.homeTeamId,
+    awayTeam: body.homeTeamId,
   })
 
   const savedMatch = await newMatch.save()
