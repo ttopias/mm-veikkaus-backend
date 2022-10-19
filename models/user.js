@@ -13,6 +13,10 @@ const userSchema = mongoose.Schema({
     type: String,
     default: 'guesser'
   },
+  points: {
+    type: Number,
+    default: 0
+  },
   guesses: [
     {
       type: mongoose.Schema.Types.ObjectId,
