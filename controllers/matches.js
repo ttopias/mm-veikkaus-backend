@@ -5,8 +5,8 @@ const Team = require('../models/team')
 router.get('/', async (request, response) => {
   const matches = await Match
     .find({})
-    .populate('homeTeam')
-    .populate('awayTeam')
+    .populate('homeTeam', { name: 1, group: 1, url: 1 })
+    .populate('awayTeam', { name: 1, group: 1, url: 1 })
   return response.json(matches)
 })
 
@@ -59,17 +59,13 @@ router.put('/:id', async (request, response) => {
   if (parseInt(match.homeGoals) > parseInt(match.awayGoals)) {
     console.log('kotivoitto :' + match.homeGoals + ' - ' + match.awayGoals)
     homeTeam.wins = homeTeam.wins + 1
-    homeTeam.points = homeTeam.points + 3
     awayTeam.losses = awayTeam.losses + 1
   } else if (parseInt(match.homeGoals) < parseInt(match.awayGoals)) {
     console.log('vierasvoitto :' + match.homeGoals + ' - ' + match.awayGoals)
     homeTeam.losses = homeTeam.losses + 1
     awayTeam.wins = awayTeam.wins + 1
-    awayTeam.points = awayTeam.points + 3
   } else {
     console.log('tasapeli :' + match.homeGoals + ' - ' + match.awayGoals)
-    homeTeam.points = homeTeam.points + 1
-    awayTeam.points = awayTeam.points + 1
     homeTeam.draws = homeTeam.draws + 1
     awayTeam.draws = awayTeam.draws + 1
   }
@@ -77,8 +73,6 @@ router.put('/:id', async (request, response) => {
   homeTeam.goalsAgainst = homeTeam.goalsAgainst + match.awayGoals
   awayTeam.goalsFor = awayTeam.goalsFor + match.awayGoals
   awayTeam.goalsAgainst = awayTeam.goalsAgainst + match.homeGoals
-  homeTeam.goalDifference = homeTeam.goalsFor - homeTeam.goalsAgainst
-  awayTeam.goalDifference = awayTeam.goalsFor - awayTeam.goalsAgainst
 
   await homeTeam.save()
   await awayTeam.save()

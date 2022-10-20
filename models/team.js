@@ -15,10 +15,6 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  games: {
-    type: Number,
-    default: 0
-  },
   wins: {
     type: Number,
     default: 0
