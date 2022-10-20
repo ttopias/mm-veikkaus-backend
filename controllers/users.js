@@ -40,7 +40,7 @@ router.post('/', async (request, response) => {
   const user = new User({
     username, 
     passwordHash,
-    role: 'regular',
+    role: 'guesser',
     guesses: [],
   })
 
