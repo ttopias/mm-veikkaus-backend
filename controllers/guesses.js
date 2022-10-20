@@ -1,5 +1,4 @@
 const router = require('express').Router()
-const jwt = require('jsonwebtoken')
 const Guess = require('../models/guess')
 const Match = require('../models/match')
 const User = require('../models/user')
@@ -15,7 +14,6 @@ const getGuessResult = (g) => {
 }
 
 const getMatchResult = (g) => {
-  console.log('g :>> ', g);
     if (g.homeGoals > g.awayGoals) {
       return '1'
     } else if (g.homeGoals < g.awayGoals) {
@@ -44,7 +42,6 @@ router.get('/:id', async (request, response) => {
 
 router.post('/', async (request, response) => {
     const body = request.body
-    console.log('body bend @guesses :>> ', body);
     const user = await User.findById(body.userId)
     const match = await Match.findById(body.matchId)
     const notFound = await Guess.find({ matchId: match._id, userId: user._id }).count()
@@ -57,14 +54,12 @@ router.post('/', async (request, response) => {
     })
 
     const savedGuess = await newGuess.save()
-    console.log('user.guesses :>> ', user.guesses);
     await User.findByIdAndUpdate(body.userId, { guesses: user.guesses.concat(savedGuess._id) }, { new: true })
     return response.status(201).json(savedGuess)
     // }
 })
 
 router.delete('/:id', async (request, response) => {
-    console.log('body :>> ', body);
     const userId = await Guess.findById(request.params.id).user._id
     await Guess.findByIdAndRemove(request.params.id)
 
@@ -73,7 +68,6 @@ router.delete('/:id', async (request, response) => {
 
 router.put('/:id', async (request, response) => {
     const body = request.body
-    console.log('body :>> ', body);
     const guess = {
         ...body.guess,
         homeTeamScore: body.homeTeamScore,
