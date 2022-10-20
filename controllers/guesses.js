@@ -5,7 +5,6 @@ const Match = require('../models/match')
 const User = require('../models/user')
 
 const getGuessResult = (g) => {
-  console.log('g :>> ', g);
     if (g.homeTeamScore > g.awayTeamScore) {
       return '1'
     } else if (g.homeTeamScore < g.awayTeamScore) {
