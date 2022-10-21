@@ -5,8 +5,8 @@ const Team = require('../models/team')
 router.get('/', async (request, response) => {
   const matches = await Match
     .find({})
-    .populate('homeTeam', { name: 1, group: 1, url: 1 })
-    .populate('awayTeam', { name: 1, group: 1, url: 1 })
+    .populate('homeTeam')
+    .populate('awayTeam')
   return response.json(matches)
 })
 

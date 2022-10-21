@@ -26,8 +26,8 @@ const getMatchResult = (g) => {
 router.get('/', async (request, response) => {
   const guesses = await Guess
         .find({})
-        .populate('match', { homeTeam: 1, awayTeam: 1, })
-        .populate('user', { username: 1 })
+        .populate('match')
+        .populate('user')
   return response.json(guesses)
 })
 
@@ -42,17 +42,17 @@ router.get('/:id', async (request, response) => {
 
 router.post('/', async (request, response) => {
     const body = request.body
-    const user = await User.findById(body.userId)
-    const match = await Match.findById(body.matchId)
-    const notFound = await Guess.find({ matchId: match._id, userId: user._id }).count()
+    console.log('body :>> ', body);
+    const user = await User.findOne({ _id: body.userId })
+    const match = await Match.findOne({ _id: body.matchId })
 
     const newGuess = new Guess({
-        match: body.matchId,
-        user: body.userId,
+        match: user,
+        user: match,
         homeTeamScore: body.homeTeamScore,
         awayTeamScore: body.awayTeamScore,
     })
-
+    
     const savedGuess = await newGuess.save()
     await User.findByIdAndUpdate(body.userId, { guesses: user.guesses.concat(savedGuess._id) }, { new: true })
     return response.status(201).json(savedGuess)
@@ -60,8 +60,14 @@ router.post('/', async (request, response) => {
 })
 
 router.delete('/:id', async (request, response) => {
-    await Guess.findByIdAndRemove({ _id: request.params.id})
-
+    const guess = await Guess.findOne({ _id: request.params.id })
+    const user = await User.findOne({ _id: guess.user._id })
+    if (!user || !guess) {
+        return response.status(404).end()
+    }
+    user.guesses = user.guesses.filter(g => g.toString() !== guess._id.toString())
+    await user.save()
+    await guess.remove()
     return response.status(204).end()
 })
 
@@ -72,33 +78,12 @@ router.put('/:id', async (request, response) => {
         homeTeamScore: body.homeTeamScore,
         awayTeamScore: body.awayTeamScore,
     }
+    console.log('body :>> ', body);
     const match = await Match.findById(body.matchId)
     const matchResult = getMatchResult(match)
     const guessResult = getGuessResult(guess)
 
-    if (guessResult === matchResult) {
-      guess.points = guess.points + 3
-    }
-    if ((guessResult === '1' && matchResult === '2') ||
-      (guessResult === '2' && matchResult === '1')) {
-      guess.points = guess.points - 4
-    }
-    if (guessResult === 'X' && matchResult === 'X') {
-      guess.points = guess.points + 4
-    }
-    if (guessResult === 'X' && matchResult !== 'X') {
-      guess.points = guess.points - 2
-    }
-    if (guessResult !== 'X' && matchResult === 'X') {
-      guess.points = guess.points - 2
-    }
-    if (guess.homeTeamScore === match.homeGoals || match.awayTeamScore === match.awayGoals) {
-      guess.points = guess.points + 1
-    }
-    if (guess.homeTeamScore === match.homeGoals && guess.awayTeamScore === match.awayGoals) {
-      guess.points = 6
-    }
-
+    console.log('guess :>> ', guess);
     Guess.findByIdAndUpdate(request.params.id, guess, { new: true })
         .then(updatedGuess => {
             response.json(updatedGuess)
