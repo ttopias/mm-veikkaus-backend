@@ -60,8 +60,7 @@ router.post('/', async (request, response) => {
 })
 
 router.delete('/:id', async (request, response) => {
-    const userId = await Guess.findById(request.params.id).user._id
-    await Guess.findByIdAndRemove(request.params.id)
+    await Guess.findByIdAndRemove({ _id: request.params.id})
 
     return response.status(204).end()
 })
