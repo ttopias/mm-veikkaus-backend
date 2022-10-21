@@ -19,6 +19,11 @@ router.get('/:id', async (request, response) => {
   }
 })
 
+router.delete('/:id', async (request, response) => {
+  await User.findByIdAndRemove({ _id: request.params.id })
+  response.status(204).end()
+})
+
 router.post('/', async (request, response) => {
   const {username, password, password2} = request.body
 
