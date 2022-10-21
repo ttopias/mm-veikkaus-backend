@@ -70,23 +70,9 @@ router.delete('/:id', async (request, response) => {
 })
 
 router.put('/:id', async (request, response) => {
-    const body = request.body
-    const guess = {
-        ...body.guess,
-        homeTeamScore: body.homeTeamScore,
-        awayTeamScore: body.awayTeamScore,
-    }
-    console.log('body :>> ', body);
-    const match = await Match.findById(body.matchId)
-    const matchResult = getMatchResult(match)
-    const guessResult = getGuessResult(guess)
-
-    console.log('guess :>> ', guess);
-    Guess.findByIdAndUpdate(request.params.id, guess, { new: true })
-        .then(updatedGuess => {
-            response.json(updatedGuess)
-        })
-        .catch(error => next(error))
+  const guess = request.body
+  const updatedGuess = await Guess.findByIdAndUpdate(request.params.id, guess, { new: true })
+  return response.json(updatedGuess)
 })
 
 module.exports = router
