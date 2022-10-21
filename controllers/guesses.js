@@ -42,7 +42,6 @@ router.get('/:id', async (request, response) => {
 
 router.post('/', async (request, response) => {
     const body = request.body
-    console.log('body :>> ', body);
     const user = await User.findOne({ _id: body.userId })
     const match = await Match.findOne({ _id: body.matchId })
 
@@ -56,12 +55,11 @@ router.post('/', async (request, response) => {
     const savedGuess = await newGuess.save()
     await User.findByIdAndUpdate(body.userId, { guesses: user.guesses.concat(savedGuess._id) }, { new: true })
     return response.status(201).json(savedGuess)
-    // }
 })
 
 router.delete('/:id', async (request, response) => {
-    const guess = await Guess.findOne({ _id: request.params.id })
-    const user = await User.findOne({ _id: guess.user._id })
+    const guess = await Guess.findOne({ id: request.params.id })
+    const user = await User.findOne({ id: guess.user._id })
     if (!user || !guess) {
         return response.status(404).end()
     }
