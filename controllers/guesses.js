@@ -42,12 +42,12 @@ router.get('/:id', async (request, response) => {
 
 router.post('/', async (request, response) => {
     const body = request.body
-    const user = await User.findOne({ _id: body.userId })
-    const match = await Match.findOne({ _id: body.matchId })
+    const user = await User.findById(body.userId)
+    const match = await Match.findById(body.matchId)
 
     const newGuess = new Guess({
-        match: user,
-        user: match,
+        match: match._id,
+        user: user._id,
         homeTeamScore: body.homeTeamScore,
         awayTeamScore: body.awayTeamScore,
     })
