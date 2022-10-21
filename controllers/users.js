@@ -19,6 +19,12 @@ router.get('/:id', async (request, response) => {
   }
 })
 
+router.put('/:id', async (request, response) => {
+  const user = request.body
+  const updatedUser = await User.findByIdAndUpdate(request.params.id, user, { new: true })
+  return response.json(updatedUser)
+})
+
 router.delete('/:id', async (request, response) => {
   await User.findByIdAndRemove({ _id: request.params.id })
   response.status(204).end()

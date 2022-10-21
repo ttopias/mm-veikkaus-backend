@@ -35,7 +35,6 @@ router.delete('/:id', async (request, response) => {
 })
 
 router.put('/:id', async (request, response) => {
-  // find team and update
   const updatedTeam = await Team.findByIdAndUpdate({ _id: request.params.id }, request.body, { new: true })
   return response.json(updatedTeam)
 })
