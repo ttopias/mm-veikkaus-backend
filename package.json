@@ -7,7 +7,10 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:ui": "rm -rf build && cd ../part2-notes/ && npm run build && cp -r build ../notes-backend"
+    "build": "rm -rf build && cd ../mm-veikkaus-frontend/ && npm run build && cp -r build ../mm-veikkaus-backend",
+    "deploy": "fly deploy",
+    "deploy:full": "npm run build && npm run deploy",    
+    "logs:prod": "fly logs"
   },
   "author": "",
   "license": "ISC",

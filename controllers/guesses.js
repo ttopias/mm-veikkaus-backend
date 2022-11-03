@@ -3,26 +3,6 @@ const Guess = require('../models/guess')
 const Match = require('../models/match')
 const User = require('../models/user')
 
-const getGuessResult = (g) => {
-    if (g.homeTeamScore > g.awayTeamScore) {
-      return '1'
-    } else if (g.homeTeamScore < g.awayTeamScore) {
-      return '2'
-    } else {
-      return 'X'
-    }
-}
-
-const getMatchResult = (g) => {
-    if (g.homeGoals > g.awayGoals) {
-      return '1'
-    } else if (g.homeGoals < g.awayGoals) {
-      return '2'
-    } else {
-      return 'X'
-    }
-}
-
 router.get('/', async (request, response) => {
   const guesses = await Guess
         .find({})

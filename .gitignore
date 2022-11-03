@@ -1,2 +1,9 @@
 .env
+.dockerignore
+.gitignore
+fly.toml
+Dockerfile
+Procfile
 node_modules
+bin
+build
