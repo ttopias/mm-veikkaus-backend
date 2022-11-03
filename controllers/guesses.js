@@ -44,6 +44,7 @@ router.delete('/:id', async (request, response) => {
         return response.status(404).end()
     }
     user.guesses = user.guesses.filter(g => g.toString() !== guess._id.toString())
+    user.points = user.points - guess.points
     await user.save()
     await guess.remove()
     return response.status(204).end()
