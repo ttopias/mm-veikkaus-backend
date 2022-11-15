@@ -46,12 +46,10 @@ router.delete('/:id', async (request, response) => {
 
 router.put('/:id', async (request, response) => {
   const match = request.body
-  console.log('newMatch -->: ', match);
   const oldMatch = await Match.findOne({ _id: match.id })
   const homeTeam = await Team.findOne({ name: match.homeTeam.name })
   const awayTeam = await Team.findOne({ name: match.awayTeam.name })
-  console.log('homeTeam :>> ', homeTeam);
-  console.log('awayTeam :>> ', awayTeam);
+
   let result = '';
 
   const matchToUpdate = {
@@ -61,6 +59,7 @@ router.put('/:id', async (request, response) => {
   }
   const guessesToUpdate = await Guess.find({ match: match.id })
 
+  /* match finished, update guesspoints accordingly */
   if (match.finished) {
     if (parseInt(match.homeGoals) > parseInt(match.awayGoals)) {
       result = 'home'
@@ -90,25 +89,25 @@ router.put('/:id', async (request, response) => {
         guessResult = 'draw'
       }
 
-      // tarkasta oliko voittaja / tasapeli oikein
-      // tarkasta oliko maalit oikein
+      // check if guess is correct
       if (parseInt(guess.homeTeamScore) === parseInt(match.homeGoals)) {
-        guess.points = guess.points + 1
+        guess.points += 1
       }
       if (parseInt(guess.awayTeamScore) === parseInt(match.awayGoals)) {
-        guess.points = guess.points + 1
+        guess.points += 1
       }
       if (parseInt(guess.awayTeamScore) === parseInt(match.awayGoals) && parseInt(guess.homeTeamScore) === parseInt(match.homeGoals)) {
-        guess.points = guess.points + 1
+        guess.points += 1
       }
       if (guessResult === result) {
         guess.points += 3
-      } else if (guessResult === 'draw' && result === 'draw') {
-        guess.points += 4
-      } else if (guessResult === 'draw' && result !== 'draw') {
+      }
+      if (guessResult === 'draw' && result === 'draw') {
+        guess.points += 1
+      } else if ((guessResult === 'draw' && result !== 'draw') || (guessResult !== 'draw' && result === 'draw')) {
         guess.points += -2
       } else {
-        guess.points += -4
+        guess.points = -4 + guess.points
       }
 
       const userToUpdate = await User.findOne({ _id: guess.user })
@@ -117,6 +116,8 @@ router.put('/:id', async (request, response) => {
       await guess.save()
     }
   }
+
+  /* situation: deleting match result */
   else {
     if (parseInt(oldMatch.homeGoals) > parseInt(oldMatch.awayGoals)) {
       homeTeam.wins = parseInt(homeTeam.wins) - 1
@@ -137,10 +138,8 @@ router.put('/:id', async (request, response) => {
     
     for await (guess of guessesToUpdate) {
       const userToUpdate = await User.findOne({ _id: guess.user })
-      console.log('user :>> ', userToUpdate);
       userToUpdate.points = parseInt(userToUpdate.points) - parseInt(guess.points)
       await userToUpdate.save()
-      console.log('user :>> ', userToUpdate);
       guess.points = 0
       await guess.save()
     }
