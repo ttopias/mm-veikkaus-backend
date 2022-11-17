@@ -22,7 +22,6 @@ router.get('/:id', async (request, response) => {
 
 router.post('/', async (request, response) => {
     const body = request.body
-    console.log('request.body @guesses.js - Backend :', request.body)
     const match = await Match.findById(body.matchId)
     const user = await User.findById(body.userId)
 
