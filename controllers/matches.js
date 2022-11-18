@@ -19,7 +19,7 @@ router.post('/', async (request, response) => {
     date: body.date,
     time: body.time,
     homeTeam: body.homeTeamId,
-    awayTeam: body.homeTeamId,
+    awayTeam: body.awayTeamId,
   })
 
   const savedMatch = await newMatch.save()
