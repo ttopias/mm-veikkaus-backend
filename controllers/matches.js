@@ -102,16 +102,15 @@ router.put('/:id', async (request, response) => {
       if (guessResult === result) {
         guess.points += 3
       }
-      if (guessResult === 'draw' && result === 'draw') {
+      else if (guessResult === 'draw' && result === 'draw') {
         guess.points += 1
       } else if ((guessResult === 'draw' && result !== 'draw') || (guessResult !== 'draw' && result === 'draw')) {
         guess.points += -2
       } else {
         guess.points = -4 + guess.points
       }
-
-      const userToUpdate = await User.findOne({ _id: guess.user })
-      userToUpdate.points = parseInt(userToUpdate.points) + parseInt(guess.points)
+      const userToUpdate = await User.findById(guess.user)
+      userToUpdate.points = parseInt(guess.points) + parseInt(userToUpdate.points)
       await userToUpdate.save()
       await guess.save()
     }
