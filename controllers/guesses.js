@@ -48,14 +48,10 @@ router.delete('/:id', async (request, response) => {
     }
     user.guesses = user.guesses.filter(g => g.toString() !== guess._id.toString())
     if (guess.points > 0) {
-        console.log('user.points @guess>0 :>> ', user.points);
         user.points = user.points - guess.points
-        console.log('user.points @guess>0 :>> ', user.points);
     }
     else {
-        console.log('user.points @guess<=0 :>> ', user.points);
         user.points = guess.points + user.points
-        console.log('user.points @guess<=0 :>> ', user.points);
     }
     await user.save()
     await guess.remove()
